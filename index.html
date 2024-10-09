@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rose's Birthday Wishes</title>
+    <style>
+        body {
+            background-color: fuchsia;
+            color: gold;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 2em; /* Change to your desired size (e.g., 2em for bigger text) */
+            font-family: 'Georgia', serif; /* Use Georgia or any other font you prefer */
+            margin: 20px; /* Margin around the message */
+        }
+
+        form {
+            background-color: royalblue;
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+        input[type="submit"] {
+            background-color: gold;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: darkgoldenrod;
+        }
+    </style>
+</head>
+<body>
+    <h1>Rose's Birthday Wishes</h1>
+    <p class="message">Please join us in celebrating the 80th birthday of our beloved Rose Mary Williams, affectionately known as Granny.</p>
+
+    <!-- Upload Form -->
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label for="file">Upload your birthday wishes (video, pictures):</label><br>
+        <input type="file" name="file" accept=".mp3, .mp4, .wav, .jpg, .jpeg, .png, .gif, .mov, .avi, .wmv" required>
+        <br>
+        <input type="submit" value="Send Wishes">
+    </form>
+
+    <div id="responseMessage"></div>
+
+    <script>
+        const form = document.getElementById('uploadForm');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(form);
+            try {
+                const response = await fetch('/.netlify/functions/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                document.getElementById('responseMessage').innerText = result.message || 'Files uploaded successfully!';
+            } catch (error) {
+                console.error('Error uploading files:', error);
+                document.getElementById('responseMessage').innerText = 'Error uploading files. Please try again.';
+            }
+        });
+    </script>
+
+</body>
+</html>

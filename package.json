@@ -1,0 +1,12 @@
+{
+  "name": "granny-birthday-uploads",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1691.0",
+    "formidable": "^1.2.6"
+  }
+}
